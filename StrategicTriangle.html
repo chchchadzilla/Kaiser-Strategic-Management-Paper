@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaiser Permanente's Homelessness Initiative</title>
+    <!-- Preload CSS for better performance -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    
+    <!-- Tailwind CSS with CDN fallback -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <noscript>
+        <style>
+            /* Basic fallback styles if JavaScript is disabled */
+            body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.5; }
+            .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+            .bg-kaiser { background-color: #00548F; color: white; }
+            .text-kaiser { color: #00548F; }
+        </style>
+    </noscript>
+    
+    <!-- Font Awesome with fallback -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <noscript>
+        <style>
+            /* Hide icons if Font Awesome fails to load */
+            .fa { display: none; }
+            .fa + span { margin-left: 0 !important; }
+        </style>
+    </noscript>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kaiser: {
+                            DEFAULT: '#00548F',
+                            light: '#0079C2',
+                            dark: '#003865'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Progressive enhancement for modern features */
+        .triangle-bg {
+            background-color: #E1F0FF; /* Fallback */
+            background: radial-gradient(circle at 50% 100%, #F0F7FF 0%, #E1F0FF 100%);
+        }
+        
+        /* Hexagon with fallback to rounded rectangle */
+        .hexagon {
+            border-radius: 12px; /* Fallback */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        @supports not (clip-path: polygon(0 0)) {
+            .hexagon {
+                clip-path: none;
+                border-radius: 12px;
+            }
+        }
+        
+        /* Timeline dots with fallback */
+        .timeline-dot {
+            position: relative;
+        }
+        
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #0079C2;
+        }
+        
+        @supports not (transform: translateY(-50%)) {
+            .timeline-dot::after {
+                top: 24px; /* Approximate vertical center */
+                transform: none;
+            }
+        }
+        
+        /* Data cards with graceful degradation */
+        .data-graphic {
+            background-color: #FFFFFF; /* Fallback */
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5FAFF 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Simplified shadow */
+        }
+        
+        @supports not (background: linear-gradient(135deg, #FFFFFF 0%, #F5FAFF 100%)) {
+            .data-graphic {
+                background: #FFFFFF;
+            }
+        }
+        
+        /* Animation with reduced motion preference */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .animate-fade-in {
+                animation: none;
+                opacity: 1;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                font-size: 12pt;
+            }
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+            a::after {
+                content: " (" attr(href) ")";
+                font-size: 0.8em;
+                font-weight: normal;
+            }
+        }
+    </style>
+</head>
+<body class="triangle-bg min-h-screen font-sans text-gray-800">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Header -->
+        <header class="mb-16 text-center">
+            <div class="inline-block px-4 py-2 bg-kaiser rounded-full mb-4">
+                <span class="text-white text-sm font-medium">CASE STUDY ANALYSIS</span>
+            </div>
+            <h1 class="text-4xl font-bold text-kaiser-dark mb-3">Kaiser Permanente's <span class="text-kaiser">Homelessness Initiative</span></h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">A strategic implementation analysis through the lens of the Strategy Triangle Framework</p>
+        </header>
+
+        <!-- Key Metrics Summary -->
+        <section class="mb-20">
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="data-graphic rounded-xl p-6 border border-gray-100 animate-fade-in" style="animation-delay: 0.1s">
+                    <div class="text-kaiser mb-4">
+                        <i class="fas fa-home text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-kaiser-dark mb-2">Housing Placements</h3>
+                    <p class="text-4xl font-bold mb-2">3,200+</p>
+                    <p class="text-gray-500 text-sm">Patients housed since program inception</p>
+                </div>
+                <div class="data-graphic rounded-xl p-6 border border-gray-100 animate-fade-in" style="animation-delay: 0.3s">
+                    <div class="text-kaiser mb-4">
+                        <i class="fas fa-hospital-user text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-kaiser-dark mb-2">ER Visits Reduced</h3>
+                    <p class="text-4xl font-bold mb-2">45%</p>
+                    <p class="text-gray-500 text-sm">Decrease among housed population</p>
+                </div>
+                <div class="data-graphic rounded-xl p-6 border border-gray-100 animate-fade-in" style="animation-delay: 0.5s">
+                    <div class="text-kaiser mb-4">
+                        <i class="fas fa-dollar-sign text-3xl" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-kaiser-dark mb-2">Cost Savings</h3>
+                    <p class="text-4xl font-bold mb-2">$42M</p>
+                    <p class="text-gray-500 text-sm">Estimated annual healthcare savings</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategy Triangle Visualization -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                <div class="p-8">
+                    <div class="flex flex-col lg:flex-row items-center">
+                        <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-8">
+                            <h2 class="text-2xl font-bold text-kaiser-dark mb-4">The Strategy Implementation Triangle</h2>
+                            <p class="text-gray-600 mb-6">Kaiser Permanente's initiative demonstrates mastery of aligning three critical corners of strategic implementation:</p>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="bg-kaiser-light text-white rounded-lg p-3 mr-4 flex-shrink-0">
+                                        <i class="fas fa-sitemap text-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-kaiser-dark mb-1">Organizational Systems</h3>
+                                        <p class="text-gray-600 text-sm">Data-driven identification of at-risk patients and connection to housing resources</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-kaiser-light text-white rounded-lg p-3 mr-4 flex-shrink-0">
+                                        <i class="fas fa-chart-bar text-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-kaiser-dark mb-1">Control & Metrics</h3>
+                                        <p class="text-gray-600 text-sm">Tracking housing placements and healthcare utilization reductions</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-kaiser-light text-white rounded-lg p-3 mr-4 flex-shrink-0">
+                                        <i class="fas fa-users text-lg" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-kaiser-dark mb-1">People & Culture</h3>
+                                        <p class="text-gray-600 text-sm">Staff trained to address social determinants as core healthcare practice</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="relative">
+                                <div class="hexagon bg-kaiser-light bg-opacity-10 w-full aspect-[1/0.866] flex items-center justify-center">
+                                    <div class="hexagon bg-white bg-opacity-90 w-3/4 aspect-[1/0.866] shadow-md flex items-center justify-center">
+                                        <div class="text-center px-6 py-4">
+                                            <div class="inline-block bg-kaiser text-white rounded-full p-3 mb-3">
+                                                <i class="fas fa-heartbeat text-xl" aria-hidden="true"></i>
+                                            </div>
+                                            <h3 class="font-bold text-kaiser-dark mb-2">Strategic Alignment</h3>
+                                            <p class="text-gray-600 text-sm">Kaiser's initiative shows how interconnected systems create transformative impact</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
+                                    <div class="animate-pulse">
+                                        <div class="hexagon border-2 border-kaiser border-opacity-30 w-full h-full absolute top-0 left-0"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizational Systems Corner -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-1/3 mb-6 md:mb-0 md:pr-8">
+                            <div class="bg-kaiser text-white rounded-xl p-4 inline-block mb-4">
+                                <i class="fas fa-sitemap text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-kaiser-dark mb-2">Organizational Systems Corner</h2>
+                            <div class="h-1 w-12 bg-kaiser-light mb-4"></div>
+                            <p class="text-gray-600">How Kaiser built infrastructure to operationalize their strategy</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="pl-4 border-l-2 border-kaiser-light">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-3">Key System Innovations</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-start">
+                                        <div class="bg-kaiser-light bg-opacity-10 text-kaiser-dark rounded-lg p-2 mr-4 flex-shrink-0">
+                                            <i class="fas fa-database" aria-hidden="true"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 mb-1">Predictive Analytics</h4>
+                                            <p class="text-gray-600 text-sm">Developed algorithms to identify patients at risk of homelessness based on healthcare utilization patterns and social factors</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="bg-kaiser-light bg-opacity-10 text-kaiser-dark rounded-lg p-2 mr-4 flex-shrink-0">
+                                            <i class="fas fa-handshake" aria-hidden="true"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 mb-1">Community Partnerships</h4>
+                                            <p class="text-gray-600 text-sm">Established formal collaborations with housing providers, social services, and local governments</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="bg-kaiser-light bg-opacity-10 text-kaiser-dark rounded-lg p-2 mr-4 flex-shrink-0">
+                                            <i class="fas fa-user-shield" aria-hidden="true"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800 mb-1">Dedicated Navigation Teams</h4>
+                                            <p class="text-gray-600 text-sm">Created specialized staff positions to guide patients through housing placement process</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Control & Metrics Corner -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-1/3 mb-6 md:mb-0 md:pr-8">
+                            <div class="bg-kaiser text-white rounded-xl p-4 inline-block mb-4">
+                                <i class="fas fa-chart-bar text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-kaiser-dark mb-2">Control & Metrics Corner</h2>
+                            <div class="h-1 w-12 bg-kaiser-light mb-4"></div>
+                            <p class="text-gray-600">How Kaiser measures success beyond traditional healthcare metrics</p>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="pl-4 border-l-2 border-kaiser-light">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-3">Performance Measurement Framework</h3>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="bg-blue-50 rounded-lg p-4 border border-blue-100">
+                                        <h4 class="font-medium text-blue-800 mb-2 flex items-center">
+                                            <i class="fas fa-home mr-2 text-blue-600" aria-hidden="true"></i>
+                                            Housing Outcomes
+                                        </h4>
+                                        <ul class="text-sm text-blue-700 space-y-1">
+                                            <li class="flex items-start">
+                                                <span class="text-blue-500 mr-2">•</span>
+                                                <span>Number of patients housed</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-500 mr-2">•</span>
+                                                <span>Housing stability duration</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-blue-500 mr-2">•</span>
+                                                <span>Time from identification to placement</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-green-50 rounded-lg p-4 border border-green-100">
+                                        <h4 class="font-medium text-green-800 mb-2 flex items-center">
+                                            <i class="fas fa-heartbeat mr-2 text-green-600" aria-hidden="true"></i>
+                                            Health Outcomes
+                                        </h4>
+                                        <ul class="text-sm text-green-700 space-y-1">
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">•</span>
+                                                <span>Reduction in emergency department visits</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">•</span>
+                                                <span>Improvement in chronic disease management</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-green-500 mr-2">•</span>
+                                                <span>Mental health service utilization</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-purple-50 rounded-lg p-4 border border-purple-100">
+                                        <h4 class="font-medium text-purple-800 mb-2 flex items-center">
+                                            <i class="fas fa-dollar-sign mr-2 text-purple-600" aria-hidden="true"></i>
+                                            Economic Outcomes
+                                        </h4>
+                                        <ul class="text-sm text-purple-700 space-y-1">
+                                            <li class="flex items-start">
+                                                <span class="text-purple-500 mr-2">•</span>
+                                                <span>Healthcare cost savings</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-purple-500 mr-2">•</span>
+                                                <span>Reduction in high-cost services</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-purple-500 mr-2">•</span>
+                                                <span>Return on investment calculations</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                                        <h4 class="font-medium text-amber-800 mb-2 flex items-center">
+                                            <i class="fas fa-users mr-2 text-amber-600" aria-hidden="true"></i>
+                                            System Outcomes
+                                        </h4>
+                                        <ul class="text-sm text-amber-700 space-y-1">
+                                            <li class="flex items-start">
+                                                <span class="text-amber-500 mr-2">•</span>
+                                                <span>Staff engagement metrics</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-amber-500 mr-2">•</span>
+                                                <span>Community partner satisfaction</span>
+                                            </li>
+                                            <li class="flex items-start">
+                                                <span class="text-amber-500 mr-2">•</span>
+                                                <span>Program scalability assessments</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Timeline -->
+        <section class="mb-20">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                <div class="p-8">
+                    <h2 class="text-2xl font-bold text-kaiser-dark mb-6 text-center">Strategic Implementation Timeline</h2>
+                    <div class="relative pl-8">
+                        <div class="absolute left-0 top-0 bottom-0 w-0.5 bg-gray-200 ml-1"></div>
+                        
+                        <div class="relative mb-10 timeline-dot pl-8">
+                            <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                                <div class="flex flex-col md:flex-row md:items-center mb-2">
+                                    <span class="text-blue-600 font-medium md:mr-4">2016</span>
+                                    <h3 class="text-lg font-semibold text-gray-800">Pilot Program Launch</h3>
+                                </div>
+                                <p class="text-gray-600">Initial $5M investment to test housing interventions in Northern California region</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative mb-10 timeline-dot pl-8">
+                            <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                                <div class="flex flex-col md:flex-row md:items-center mb-2">
+                                    <span class="text-blue-600 font-medium md:mr-4">2018</span>
+                                    <h3 class="text-lg font-semibold text-gray-800">Data Infrastructure Built</h3>
+                                </div>
+                                <p class="text-gray-600">Implemented predictive analytics system and established key partnerships with housing providers</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative mb-10 timeline-dot pl-8">
+                            <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                                <div class="flex flex-col md:flex-row md:items-center mb-2">
+                                    <span class="text-blue-600 font-medium md:mr-4">2019</span>
+                                    <h3 class="text-lg font-semibold text-gray-800">Regional Expansion</h3>
+                                </div>
+                                <p class="text-gray-600">Program expanded to Southern California with $25M additional funding</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative mb-10 timeline-dot pl-8">
+                            <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                                <div class="flex flex-col md:flex-row md:items-center mb-2">
+                                    <span class="text-blue-600 font-medium md:mr-4">2020</span>
+                                    <h3 class="text-lg font-semibold text-gray-800">Pandemic Response</h3>
+                                </div>
+                                <p class="text-gray-600">Adapted program to address COVID-19 related housing instability, accelerating implementation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="relative timeline-dot pl-8">
+                            <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                                <div class="flex flex-col md:flex-row md:items-center mb-2">
+                                    <span class="text-blue-600 font-medium md:mr-4">2022</span>
+                                    <h3 class="text-lg font-semibold text-gray-800">National Recognition</h3>
+                                </div>
+                                <p class="text-gray-600">Program featured in Modern Healthcare for demonstrating "startling success" in outcomes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Insights -->
+        <section class="mb-12">
+            <div class="bg-kaiser-dark rounded-2xl overflow-hidden">
+                <div class="p-8 md:p-12 text-white">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Key Strategic Insights</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                            <h3 class="font-semibold text-xl mb-3 flex items-center">
+                                <i class="fas fa-link mr-3 text-kaiser-light" aria-hidden="true"></i>
+                                System Interdependence
+                            </h3>
+                            <p class="opacity-90">The initiative demonstrates how organizational systems and control metrics must evolve together—Kaiser's data infrastructure enabled new measurement capabilities, while their metrics reinforced the importance of the system investments.</p>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                            <h3 class="font-semibold text-xl mb-3 flex items-center">
+                                <i class="fas fa-arrows-alt-h mr-3 text-kaiser-light" aria-hidden="true"></i>
+                                Vertical Integration
+                            </h3>
+                            <p class="opacity-90">By addressing housing (typically outside healthcare's scope), Kaiser achieved deeper vertical integration of social determinants into care delivery, creating a competitive advantage in population health management.</p>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                            <h3 class="font-semibold text-xl mb-3 flex items-center">
+                                <i class="fas fa-chart-line mr-3 text-kaiser-light" aria-hidden="true"></i>
+                                Metric Evolution
+                            </h3>
+                            <p class="opacity-90">The program represents a shift from process metrics (how many patients screened) to outcome metrics (how many housed with improved health), demonstrating strategic maturity.</p>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-xl p-6">
+                            <h3 class="font-semibold text-xl mb-3 flex items-center">
+                                <i class="fas fa-expand mr-3 text-kaiser-light" aria-hidden="true"></i>
+                                Scalability Tension
+                            </h3>
+                            <p class="opacity-90">While successful, the program faces scalability challenges due to regional housing market variations—highlighting the tension between standardized systems and localized implementation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-sm text-gray-500">
+            <div class="mb-4">
+                <a href="https://www.modernhealthcare.com/safety-quality/kaiser-seeing-some-startling-success-data-driven-program-reduce-homelessness" 
+                   class="text-kaiser hover:text-kaiser-dark font-medium" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    <strong>Read the full Modern Healthcare article</strong>
+                </a>
+            </div>
+            <p>Strategic Analysis | Prepared for BUS497A, taught by Prof. Phil Gorman | Prepared By Chad Keith, BUS 497A-13761-SP2025, California State University, Northridge</p>
+            <p class="mt-2">© 2025 Chad Keith, All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <!-- Browser compatibility warning for very old browsers -->
+    <script>
+        // Check for ES6 support and basic CSS features
+        const isCompatible = (function() {
+            try {
+                new Function("(a = 0) => a");
+                return CSS.supports('display', 'grid') || 
+                       CSS.supports('display', 'flex') ||
+                       true; // Still show content even if not fully supported
+            } catch (e) {
+                return false;
+            }
+        })();
+        
+        if (!isCompatible) {
+            const warning = document.createElement('div');
+            warning.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#ff9800;color:white;padding:1rem;text-align:center;z-index:1000;';
+            warning.innerHTML = 'Your browser may not display all features correctly. For best experience, please use a modern browser like Chrome, Firefox, Edge, or Safari.';
+            document.body.appendChild(warning);
+        }
+    </script>
+</body>
+</html>
